@@ -50,10 +50,11 @@ jobs:
 
 
   zizmor:
+    name: Zizmor
     runs-on: ubuntu-24.04-arm
 
     permissions:
-      security-events: write
+      security-events: write # Required for upload-sarif (used by zizmor-action) to upload SARIF files.
 
     steps:
       - name: Checkout
