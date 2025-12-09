@@ -1,0 +1,15 @@
+---
+name: Block Old Workflow Rerun
+description: GitHub Action to block rerunning an outdated workflow run
+author: Tenzer
+inputs:
+  token:
+    description: GitHub API token, used for getting information about the workflow run
+    required: true
+    default: ${{ github.token }}
+  branch:
+    description: Limit checks to only be against workflow runs for a specific branch
+    required: false
+runs:
+  using: node24
+  main: dist/index.js
