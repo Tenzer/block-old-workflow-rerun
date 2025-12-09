@@ -17,7 +17,7 @@
     "@vercel/ncc": "0.38.4"
   },
   "scripts": {
-    "build": "ncc build src/index.js",
-    "check": "biome check --write ."
+    "biome": "biome check --write .",
+    "build": "ncc build src/index.js"
   }
 }
