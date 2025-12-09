@@ -7,9 +7,14 @@ on:
     branches:
       - main
 
+permissions: {}
+
 jobs:
   biome:
     runs-on: ubuntu-24.04-arm
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -26,6 +31,9 @@ jobs:
 
   dist:
     runs-on: ubuntu-24.04-arm
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -71,6 +79,8 @@ jobs:
   all-checks-passed:
     if: always()
     runs-on: ubuntu-24.04-arm
+
+    permissions: {}
 
     needs:
       - biome
