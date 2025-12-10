@@ -32593,7 +32593,7 @@ try {
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo,
     workflow_id: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow,
-    branch: _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch"),
+    branch: _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch") || "",
     per_page: 100,
   });
 
