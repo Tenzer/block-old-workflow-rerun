@@ -32620,20 +32620,26 @@ try {
     "waiting",
   ];
 
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`This workflow run ID is: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId}`);
   for (const workflowRun of workflowRuns.data.workflow_runs) {
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(
+      `Checking if workflow run ID ${workflowRun.id} with a status of ${workflowRun.status} is newer`,
+    );
+
     // Stop processing any more if we have reached the current workflow run
     if (workflowRun.id <= _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId) {
+      _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Current or older workflow run ID found");
       break;
     }
 
     if (statuses.includes(workflowRun.status)) {
       _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(
-        `A newer workflow run has either started or already run: ${workflowRun.html_url}`,
+        `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
       );
     }
   }
 } catch (error) {
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`An error occurred: ${error.message}`);
 }
 
 __webpack_async_result__();

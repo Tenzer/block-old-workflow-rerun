@@ -36,18 +36,24 @@ try {
     "waiting",
   ];
 
+  core.debug(`This workflow run ID is: ${context.runId}`);
   for (const workflowRun of workflowRuns.data.workflow_runs) {
+    core.debug(
+      `Checking if workflow run ID ${workflowRun.id} with a status of ${workflowRun.status} is newer`,
+    );
+
     // Stop processing any more if we have reached the current workflow run
     if (workflowRun.id <= context.runId) {
+      core.debug("Current or older workflow run ID found");
       break;
     }
 
     if (statuses.includes(workflowRun.status)) {
       core.setFailed(
-        `A newer workflow run has either started or already run: ${workflowRun.html_url}`,
+        `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
       );
     }
   }
 } catch (error) {
-  core.setFailed(error.message);
+  core.setFailed(`An error occurred: ${error.message}`);
 }
