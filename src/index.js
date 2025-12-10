@@ -11,7 +11,7 @@ try {
     repo: context.repo.repo,
     run_id: context.runId,
   });
-  const workflowId = workflow.data.workflow.id;
+  const workflowId = workflow.data.workflows[0].id;
 
   core.debug(
     `Fetching workflow runs for owner: ${context.repo.owner}\nRepository: ${context.repo.repo}\nWorkflow ID: ${workflowId}\nBranch: ${branch}`,

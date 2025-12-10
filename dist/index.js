@@ -32595,7 +32595,7 @@ try {
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
     run_id: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId,
   });
-  const workflowId = workflow.data.workflow.id;
+  const workflowId = workflow.data.workflows[0].id;
 
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(
     `Fetching workflow runs for owner: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}\nRepository: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}\nWorkflow ID: ${workflowId}\nBranch: ${branch}`,
