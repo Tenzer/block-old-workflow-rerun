@@ -32586,8 +32586,12 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 
 try {
-  const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token");
+  const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token", { required: true });
   const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(token);
+
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(
+    `Fetching workflow runs for owner "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.owner}", repo "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo}", workflow "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow}", branch "${_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch")}"`,
+  );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.owner,
@@ -32621,6 +32625,7 @@ try {
     }
   }
 } catch (error) {
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(error);
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
 
