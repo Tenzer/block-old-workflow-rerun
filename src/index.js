@@ -2,8 +2,12 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 try {
-  const token = core.getInput("token");
+  const token = core.getInput("token", { required: true });
   const octokit = github.getOctokit(token);
+
+  core.debug(
+    `Fetching workflow runs for owner "${github.context.owner}", repo "${github.context.repo}", workflow "${github.context.workflow}", branch "${core.getInput("branch")}"`,
+  );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
     owner: github.context.owner,
@@ -37,5 +41,6 @@ try {
     }
   }
 } catch (error) {
+  core.debug(error);
   core.setFailed(error.message);
 }
