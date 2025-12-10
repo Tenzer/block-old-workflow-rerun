@@ -9,8 +9,15 @@ inputs:
     default: ${{ github.token }}
   branch:
     description: Limit checks to only be against workflow runs for a specific branch
-    required: false
+    required: true
     default: ""
+  fail-on-old-rerun:
+    description: Fail the workflow in case this is a rerun of an old workflow run
+    required: true
+    default: "true"
+outputs:
+  allowed:
+    description: Boolean value to say if the run should be allowed (true) or not (false)
 runs:
   using: node24
   main: dist/index.js
