@@ -4,17 +4,23 @@ import { context, getOctokit } from "@actions/github";
 try {
   const token = core.getInput("token", { required: true });
   const octokit = getOctokit(token);
+  const branch = core.getInput("branch");
 
-  core.debug(context);
+  const workflow = await octokit.rest.actions.getWorkflow({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    run_id: context.runId,
+  });
+
   core.debug(
-    `Fetching workflow runs for owner "${context.repo.owner}", repo "${context.repo.repo}", workflow "${context.workflow}", branch "${core.getInput("branch")}"`,
+    `Fetching workflow runs for owner: ${context.repo.owner}\nRepository: ${context.repo.repo}\nWorkflow ID: ${workflow.workflow_id}\nBranch: ${branch}`,
   );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    workflow_id: context.workflow,
-    branch: core.getInput("branch") || "",
+    workflow_id: workflow.workflow_id,
+    branch: branch,
     per_page: 100,
   });
 
@@ -42,6 +48,5 @@ try {
     }
   }
 } catch (error) {
-  core.debug(error);
   core.setFailed(error.message);
 }
