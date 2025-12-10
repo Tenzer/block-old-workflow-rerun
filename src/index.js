@@ -58,6 +58,10 @@ try {
         core.setFailed(
           `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
         );
+      } else {
+        core.warning(
+          `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
+        );
       }
       break;
     }
