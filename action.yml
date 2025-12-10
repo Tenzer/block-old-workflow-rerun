@@ -2,6 +2,9 @@
 name: Block Old Workflow Rerun
 description: GitHub Action to block rerunning an outdated workflow run
 author: Tenzer
+branding:
+  icon: stop-circle
+  color: gray-dark
 inputs:
   token:
     description: GitHub API token, used for getting information about the workflow run
