@@ -9,7 +9,7 @@ try {
     owner: github.context.owner,
     repo: github.context.repo,
     workflow_id: github.context.workflow,
-    branch: core.getInput("branch"),
+    branch: core.getInput("branch") || "",
     per_page: 100,
   });
 
