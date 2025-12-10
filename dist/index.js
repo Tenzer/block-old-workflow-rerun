@@ -32595,15 +32595,16 @@ try {
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
     run_id: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId,
   });
+  const workflowId = workflow.data.workflow.id;
 
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(
-    `Fetching workflow runs for owner: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}\nRepository: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}\nWorkflow ID: ${workflow.workflow_id}\nBranch: ${branch}`,
+    `Fetching workflow runs for owner: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}\nRepository: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}\nWorkflow ID: ${workflowId}\nBranch: ${branch}`,
   );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
-    workflow_id: workflow.workflow_id,
+    workflow_id: workflowId,
     branch: branch,
     per_page: 100,
   });
