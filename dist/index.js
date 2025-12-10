@@ -32589,6 +32589,7 @@ try {
   const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token", { required: true });
   const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(token);
   const branch = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch");
+  const failOnOldRerun = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getBooleanInput("fail-on-old-rerun");
 
   const workflow = await octokit.rest.actions.getWorkflow({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
@@ -32621,6 +32622,8 @@ try {
   ];
 
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`This workflow run ID is: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId}`);
+
+  let allowed = true;
   for (const workflowRun of workflowRuns.data.workflow_runs) {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(
       `Checking if workflow run ID ${workflowRun.id} with a status of ${workflowRun.status} is newer`,
@@ -32633,10 +32636,19 @@ try {
     }
 
     if (statuses.includes(workflowRun.status)) {
-      _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(
-        `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
-      );
+      allowed = false;
+      _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("allowed", false);
+      if (failOnOldRerun) {
+        _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(
+          `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
+        );
+      }
+      break;
     }
+  }
+
+  if (allowed) {
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("allowed", true);
   }
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`An error occurred: ${error.message}`);

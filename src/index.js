@@ -5,6 +5,7 @@ try {
   const token = core.getInput("token", { required: true });
   const octokit = getOctokit(token);
   const branch = core.getInput("branch");
+  const failOnOldRerun = core.getBooleanInput("fail-on-old-rerun");
 
   const workflow = await octokit.rest.actions.getWorkflow({
     owner: context.repo.owner,
@@ -37,6 +38,8 @@ try {
   ];
 
   core.debug(`This workflow run ID is: ${context.runId}`);
+
+  let allowed = true;
   for (const workflowRun of workflowRuns.data.workflow_runs) {
     core.debug(
       `Checking if workflow run ID ${workflowRun.id} with a status of ${workflowRun.status} is newer`,
@@ -49,10 +52,19 @@ try {
     }
 
     if (statuses.includes(workflowRun.status)) {
-      core.setFailed(
-        `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
-      );
+      allowed = false;
+      core.setOutput("allowed", false);
+      if (failOnOldRerun) {
+        core.setFailed(
+          `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
+        );
+      }
+      break;
     }
+  }
+
+  if (allowed) {
+    core.setOutput("allowed", true);
   }
 } catch (error) {
   core.setFailed(`An error occurred: ${error.message}`);

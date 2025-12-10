@@ -44,6 +44,19 @@ Limit checking to only happen for the provided branch.
 This can be used if the same workflow may run for multiple branches,
 but deploys e.g. only are triggered when run on the `main` branch.
 
+### `fail-on-old-rerun`
+
+Fail the workflow run in case an old workflow is being rerun.
+Defaults to `true`.
+If set to `false`, use the `allowed` output.
+
+
+## Outputs
+
+### `allowed`
+
+Boolean value to say if the run should be allowed (`true`) or not (`false`).
+
 
 ## Example
 
