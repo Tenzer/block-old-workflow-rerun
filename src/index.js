@@ -11,15 +11,16 @@ try {
     repo: context.repo.repo,
     run_id: context.runId,
   });
+  const workflowId = workflow.data.workflow.id;
 
   core.debug(
-    `Fetching workflow runs for owner: ${context.repo.owner}\nRepository: ${context.repo.repo}\nWorkflow ID: ${workflow.workflow_id}\nBranch: ${branch}`,
+    `Fetching workflow runs for owner: ${context.repo.owner}\nRepository: ${context.repo.repo}\nWorkflow ID: ${workflowId}\nBranch: ${branch}`,
   );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    workflow_id: workflow.workflow_id,
+    workflow_id: workflowId,
     branch: branch,
     per_page: 100,
   });
