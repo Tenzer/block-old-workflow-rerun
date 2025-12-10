@@ -32642,6 +32642,10 @@ try {
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(
           `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
         );
+      } else {
+        _actions_core__WEBPACK_IMPORTED_MODULE_0__.warning(
+          `A newer workflow run has either started or already completed: ${workflowRun.html_url}`,
+        );
       }
       break;
     }
