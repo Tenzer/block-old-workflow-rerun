@@ -32587,15 +32587,16 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 try {
   const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token", { required: true });
-  const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(token);
+  const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(token);
 
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context);
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(
-    `Fetching workflow runs for owner "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.owner}", repo "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo}", workflow "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow}", branch "${_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch")}"`,
+    `Fetching workflow runs for owner "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}", repo "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}", workflow "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow}", branch "${_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch")}"`,
   );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
-    owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.owner,
-    repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo,
+    owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
+    repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
     workflow_id: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow,
     branch: _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch") || "",
     per_page: 100,
@@ -32614,7 +32615,7 @@ try {
 
   for (const workflowRun of workflowRuns.data.workflow_runs) {
     // Stop processing any more if we have reached the current workflow run
-    if (workflowRun.id <= _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow.id) {
+    if (workflowRun.id <= _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId) {
       break;
     }
 

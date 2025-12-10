@@ -1,18 +1,19 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
+import { context, getOctokit } from "@actions/github";
 
 try {
   const token = core.getInput("token", { required: true });
-  const octokit = github.getOctokit(token);
+  const octokit = getOctokit(token);
 
+  core.debug(context);
   core.debug(
-    `Fetching workflow runs for owner "${github.context.owner}", repo "${github.context.repo}", workflow "${github.context.workflow}", branch "${core.getInput("branch")}"`,
+    `Fetching workflow runs for owner "${context.repo.owner}", repo "${context.repo.repo}", workflow "${context.workflow}", branch "${core.getInput("branch")}"`,
   );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
-    owner: github.context.owner,
-    repo: github.context.repo,
-    workflow_id: github.context.workflow,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    workflow_id: context.workflow,
     branch: core.getInput("branch") || "",
     per_page: 100,
   });
@@ -30,7 +31,7 @@ try {
 
   for (const workflowRun of workflowRuns.data.workflow_runs) {
     // Stop processing any more if we have reached the current workflow run
-    if (workflowRun.id <= github.context.workflow.id) {
+    if (workflowRun.id <= context.runId) {
       break;
     }
 
