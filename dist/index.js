@@ -32588,17 +32588,23 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 try {
   const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token", { required: true });
   const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(token);
+  const branch = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch");
 
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context);
+  const workflow = await octokit.rest.actions.getWorkflow({
+    owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
+    repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
+    run_id: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId,
+  });
+
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(
-    `Fetching workflow runs for owner "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}", repo "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}", workflow "${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow}", branch "${_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch")}"`,
+    `Fetching workflow runs for owner: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}\nRepository: ${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}\nWorkflow ID: ${workflow.workflow_id}\nBranch: ${branch}`,
   );
 
   const workflowRuns = await octokit.rest.actions.listWorkflowRuns({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo,
-    workflow_id: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.workflow,
-    branch: _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("branch") || "",
+    workflow_id: workflow.workflow_id,
+    branch: branch,
     per_page: 100,
   });
 
@@ -32626,7 +32632,6 @@ try {
     }
   }
 } catch (error) {
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(error);
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
 

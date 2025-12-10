@@ -10,6 +10,7 @@ inputs:
   branch:
     description: Limit checks to only be against workflow runs for a specific branch
     required: false
+    default: ""
 runs:
   using: node24
   main: dist/index.js
