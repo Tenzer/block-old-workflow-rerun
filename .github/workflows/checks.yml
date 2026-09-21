@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   biome:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
 
     permissions:
       contents: read
@@ -32,7 +32,7 @@ jobs:
 
 
   dist:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
 
     permissions:
       contents: read
@@ -60,7 +60,7 @@ jobs:
 
 
   zizmor:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
 
     permissions:
       contents: read
@@ -82,7 +82,7 @@ jobs:
 
   all-checks-passed:
     if: always()
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
 
     permissions: {}
 
