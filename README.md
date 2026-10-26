@@ -64,7 +64,7 @@ Boolean value to say if the run should be allowed (`true`) or not (`false`).
 steps:
   - name: Check this is the newest workflow run
     uses: Tenzer/block-old-workflow-rerun@v1
-  
+
   - name: Deploy code
     # ...
 ```
