@@ -30,7 +30,6 @@ jobs:
       - name: Run Biome
         run: biome ci .
 
-
   dist:
     runs-on: ubuntu-26.04-arm
 
@@ -58,7 +57,6 @@ jobs:
       - name: Check for differences
         run: git diff --exit-code
 
-
   zizmor:
     runs-on: ubuntu-26.04-arm
 
@@ -78,7 +76,6 @@ jobs:
           annotations: true
           min-severity: low
           persona: pedantic
-
 
   all-checks-passed:
     if: always()
