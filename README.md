@@ -29,7 +29,6 @@ This action tries to fill that gap by calling GitHub's API
 and checking if there's a newer workflow run that either is in progress or has finished running,
 and if found, will cause the (outdated) workflow run to be stopped.
 
-
 ## Inputs
 
 ### `token`
@@ -50,13 +49,11 @@ Fail the workflow run in case an old workflow is being rerun.
 Defaults to `true`.
 If set to `false`, use the `allowed` output.
 
-
 ## Outputs
 
 ### `allowed`
 
 Boolean value to say if the run should be allowed (`true`) or not (`false`).
-
 
 ## Example
 
